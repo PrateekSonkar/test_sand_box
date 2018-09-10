@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SmallCardComponent from "./SmallCardComponent";
+import CreateInventory from "./CreateInventory";
 
 import "./styles.css";
 
@@ -25,12 +26,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Hello CodeSandbox</h1>
-        <h2>Start editing to see some magic happen!</h2>
+        <div>Text goes here</div>
         <div className="parentDiv">
           {this.state.boxtexts.map((boxtext, index) => (
             <SmallCardComponent key={index} boxtext={boxtext} />
           ))}
+        </div>
+        <div className="container">
+          <CreateInventory />
         </div>
       </div>
     );
