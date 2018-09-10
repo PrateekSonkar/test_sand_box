@@ -1,6 +1,4 @@
 import React from "react";
-import jquery from "jquery";
-import ReactDOM from "react-dom";
 
 export default class CreateInventory extends React.Component {
   constructor(props) {
