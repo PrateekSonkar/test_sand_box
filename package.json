@@ -5,9 +5,11 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "lodash": "4.17.10",
     "react": "16.4.2",
     "react-dom": "16.4.2",
     "react-materialize": "latest",
+    "react-router-dom": "4.3.1",
     "react-scripts": "1.1.4"
   },
   "devDependencies": {},

@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import SmallCardComponent from "./SmallCardComponent";
 import CreateInventory from "./CreateInventory";
+import CreateBinType from "./CreateBinType";
 
 import "./styles.css";
 
@@ -34,6 +36,12 @@ class App extends React.Component {
         </div>
         <div className="container">
           <CreateInventory />
+        </div>
+        <div className="row">
+          <b>New Bin 1 </b>
+          <div className="container">
+            <CreateBinType />
+          </div>
         </div>
       </div>
     );
