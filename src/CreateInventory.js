@@ -35,15 +35,13 @@ export default class CreateInventory extends React.Component {
     let inventory = {};
     inventory["lotname"] = e.target.elements.lotname.value;
     inventory["lotquantity"] = e.target.elements.lotquantity.value;
+    inventory["lotnumber"] = e.target.elements.lotnumber.value;
     inventory["bintype"] = this.state.option;
     this.generateInventoryWithUniqueNumber(inventory);
   }
 
   generateInventoryWithUniqueNumber(inventory) {
     //generate unique nummber to individual bin
-    for (let a = 0; a < inventory.lotquantity; a++) {
-      //to be continued
-    }
   }
   render() {
     return (
@@ -52,6 +50,7 @@ export default class CreateInventory extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input placeholder="Lot Name" name="lotname" />
           <input placeholder="Lot Quantity" name="lotquantity" />
+          <input placeholder="Lot Number" name="lotnumber" />
           <div className="input-field col s12">
             <select onChange={this.handleOnChange}>
               <option value="" disabled>
