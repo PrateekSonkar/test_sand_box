@@ -8,18 +8,13 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="row">
         <nav className="deep-purple darken-2">
           <div className="nav-wrapper">
-            <a href="#" className="brand-logo">
-              Logo
-            </a>
+            <a href="#" className="brand-logo" />
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>
-                <Link to="/createbintype">Create Bin</Link>
-              </li>
-              <li>
-                <Link to="/createbininventory">Create Bin Inventory</Link>
+                <Link to="/viewbintypes">View Bin</Link>
               </li>
               <li>
                 <Link to="/viewbininventory">View Bin Inventory</Link>

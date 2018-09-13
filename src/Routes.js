@@ -7,6 +7,7 @@ import CreateBinType from "./CreateBinType";
 import ViewBinInventory from "./ViewInventory";
 import RequestBins from "./RequestInventory";
 import ViewBinRequest from "./ViewBinRequest";
+import ViewBinTypes from "./ViewBinTypes";
 import Header from "./Header";
 
 const Routes = props => {
@@ -17,11 +18,8 @@ const Routes = props => {
           <Header />
           <Switch>
             <Route path="/" component={SmallCardComponent} exact={true} />
-            <Route
-              path="/createbintype"
-              component={CreateBinType}
-              exact={true}
-            />
+            <Route path="/createbintype" component={CreateBinType} />
+            <Route path="/viewbintypes" component={ViewBinTypes} />
             <Route path="/createbininventory" component={CreateBinInventory} />
             <Route path="/viewbininventory" component={ViewBinInventory} />
             <Route path="/requestbins" component={RequestBins} />
