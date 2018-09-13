@@ -43,43 +43,71 @@ export default class CreateBinType extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleClick}>
-          <input type="text" placeholder="Bin Name" name="binname" />
-          <input type="text" placeholder="Bin Code" name="bincode" />
-          <input type="text" placeholder="Bin Capacity" name="bincap" />
-          <input
-            type="text"
-            placeholder="Bin Manufacturer"
-            name="binmanufacturer"
-          />
-          <button className="waves-effect waves-light btn">
-            Create Bin Type
-          </button>
-        </form>
-        <div className="row" />
-        <table>
-          <thead>
-            <tr>
-              <th>Bin Name</th>
-              <th>Bin Code</th>
-              <th>Bin Capacity</th>
-              <th>Bin Manufacturer</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.bintypes.map((bintype, index) => (
-              <tr rel={bintype.code} key={bintype.code + index}>
-                <td>{bintype.name}</td>
-                <td>{bintype.code}</td>
-                <td>{bintype.capacity} Kg.</td>
-                <td>{bintype.manufacturer}</td>
-                <td onClick={this.deleteBinType}>Delete</td>
+      <div className="container">
+        <div className="row">
+          <div className="col s12 m6">
+            <div className="card">
+              <div className="card-content">
+                <span className="card-title">Create Bin</span>
+                <div>
+                  <form onSubmit={this.handleClick}>
+                    <div class="input-field col s6">
+                      <input
+                        placeholder="Placeholder"
+                        id="first_name"
+                        type="text"
+                        class="validate"
+                      />
+                      <label for="first_name">First Name</label>
+                    </div>
+                    <input type="text" placeholder="Bin Name" name="binname" />
+                    <input type="text" placeholder="Bin Code" name="bincode" />
+                    <input
+                      type="text"
+                      placeholder="Bin Capacity"
+                      name="bincap"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Bin Manufacturer"
+                      name="binmanufacturer"
+                    />
+                    <div className="card-action">
+                      <button className="waves-effect waves-light btn deep-orange">
+                        Create Bin Type
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <table>
+            <thead>
+              <tr>
+                <th>Bin Name</th>
+                <th>Bin Code</th>
+                <th>Bin Capacity</th>
+                <th>Bin Manufacturer</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.bintypes.map((bintype, index) => (
+                <tr rel={bintype.code} key={bintype.code + index}>
+                  <td>{bintype.name}</td>
+                  <td>{bintype.code}</td>
+                  <td>{bintype.capacity} Kg.</td>
+                  <td>{bintype.manufacturer}</td>
+                  <td onClick={this.deleteBinType}>Delete</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
