@@ -34,8 +34,8 @@ export default class ViewBinRequest extends React.Component {
                     <td>TP5</td>
                     <td>10</td>
                     <td>
-                      <i class="material-icons">done</i>
-                      <i class="material-icons">arrow_forward</i>
+                      <i className="material-icons">done</i>
+                      <i className="material-icons">arrow_forward</i>
                     </td>
                   </tr>
                   <tr>
@@ -44,8 +44,8 @@ export default class ViewBinRequest extends React.Component {
                     <td>TP3</td>
                     <td>10</td>
                     <td>
-                      <i class="material-icons">done</i>
-                      <i class="material-icons">arrow_forward</i>
+                      <i className="material-icons">done</i>
+                      <i className="material-icons">arrow_forward</i>
                     </td>
                   </tr>
                   <tr>
@@ -54,8 +54,8 @@ export default class ViewBinRequest extends React.Component {
                     <td>TP7</td>
                     <td>10</td>
                     <td>
-                      <i class="material-icons">done</i>
-                      <i class="material-icons">arrow_forward</i>
+                      <i className="material-icons">done</i>
+                      <i className="material-icons">arrow_forward</i>
                     </td>
                   </tr>
                 </tbody>

@@ -7,6 +7,6 @@ export default class BoxComponent extends React.Component {
   }
 
   render() {
-    return <div className="customcardcss">{this.props.boxtext}</div>;
+    return <div className="customcardcss">{this.state.boxtext}</div>;
   }
 }

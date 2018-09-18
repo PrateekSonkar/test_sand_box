@@ -9,6 +9,20 @@ export default class CreateBinType extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.deleteBinType = this.deleteBinType.bind(this);
+    this.writeChangesToFile = this.writeChangesToFile.bind(this);
+  }
+
+  writeChangesToFile(key, newBin) {
+    let newObject = {};
+    newObject[key] = newBin;
+    const filePath = "../dbfiles/bintype.json";
+    jsonfile.writeFile(filePath, newObject, function(err) {
+      if (err) {
+        console.log("Error : ", err);
+      } else {
+        console.log("Write sucessfull");
+      }
+    });
   }
 
   handleClick(e) {
@@ -19,11 +33,16 @@ export default class CreateBinType extends React.Component {
     newBin["capacity"] = e.target.elements.bincap.value;
     newBin["manufacturer"] = e.target.elements.binmanufacturer.value;
     console.log(newBin);
-    this.setState(prevState => {
-      return {
-        bintypes: prevState.bintypes.concat([newBin])
-      };
-    });
+    this.setState(
+      prevState => {
+        return {
+          bintypes: prevState.bintypes.concat([newBin])
+        };
+      },
+      () => {
+        this.writeChangesToFile("bintypes", this.state.bintypes);
+      }
+    );
   }
 
   deleteBinType(e) {

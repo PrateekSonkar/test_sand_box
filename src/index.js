@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "./Routes";
+import firebase from "../firebase/firebase";
 // import SmallCardComponent from "./SmallCardComponent";
 // import CreateInventory from "./CreateInventory";
 // import CreateBinType from "./CreateBinType";
@@ -68,6 +69,15 @@ import "./styles.css";
 //   </div>
 // );
 // }
+
+console.log(firebase.name);
+console.log(firebase.database());
+firebase
+  .database()
+  .ref()
+  .set({
+    name: "Prateek"
+  });
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<Routes />, rootElement);

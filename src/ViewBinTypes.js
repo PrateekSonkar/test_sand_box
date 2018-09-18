@@ -74,10 +74,11 @@ export default class ViewBinTypes extends React.Component {
           <div className="col s12 m2" />
         </div>
         <div className="right-align">
-          <Link to="/createbintype">
-            <a class="btn-floating btn-large waves-effect waves-light deep-orange">
-              <i class="material-icons">add</i>
-            </a>
+          <Link
+            to="/createbintype"
+            className="btn-floating btn-large waves-effect waves-light deep-orange"
+          >
+            <i className="material-icons">add</i>
           </Link>
         </div>
       </div>
