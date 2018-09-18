@@ -77,6 +77,12 @@ firebase
   .ref()
   .set({
     name: "Prateek"
+  })
+  .then(() => {
+    console.log("data is saved");
+  })
+  .catch(e => {
+    console.log("failed : ", e);
   });
 
 const rootElement = document.getElementById("root");
