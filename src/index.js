@@ -70,20 +70,47 @@ import "./styles.css";
 // );
 // }
 
-console.log(firebase.name);
-console.log(firebase.database());
-firebase
-  .database()
-  .ref()
-  .set({
-    name: "Prateek"
-  })
-  .then(() => {
-    console.log("data is saved");
-  })
-  .catch(e => {
-    console.log("failed : ", e);
-  });
+// console.log(firebase.name);
+// console.log(firebase.database());
+// firebase
+//   .database()
+//   .ref()
+//   .set({
+//     name: "Prateek"
+//   })
+//   .then(() => {
+//     console.log("data is saved");
+//   })
+//   .catch(e => {
+//     console.log("failed : ", e);
+//   });
+
+// const database = firebase.database();
+
+// database.ref("expense").push({
+//   description: "Tea",
+//   notes: "Event Tea",
+//   amount: 25,
+//   createdAt: 10000
+// });
+
+// database.ref("expense").push({
+//   description: "Coffe",
+//   notes: "Morning Coffee",
+//   amount: 28,
+//   createdAt: 15000
+// });
+
+// database.ref("expense").push({
+//   description: "Shakes",
+//   notes: "Brunch Shake",
+//   amount: 64,
+//   createdAt: 15000
+// });
+
+// database.ref("expense").on("child_changed", snapshot => {
+//   console.log(snapshot.key, snapshot.val());
+// });
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<Routes />, rootElement);

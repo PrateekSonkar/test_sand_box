@@ -1,62 +1,66 @@
 import React from "react";
-import _lodash from "lodash";
+import { collBinTypes } from "../firebase/collections";
 
 export default class CreateBinType extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bintypes: []
+      bintypes: [],
+      info: "",
+      error: ""
     };
     this.handleClick = this.handleClick.bind(this);
     this.deleteBinType = this.deleteBinType.bind(this);
-    this.writeChangesToFile = this.writeChangesToFile.bind(this);
+    this.resetInfoAndError = this.resetInfoAndError.bind(this);
+    this.resetInputFields = this.resetInputFields.bind(this);
   }
 
-  writeChangesToFile(key, newBin) {
-    let newObject = {};
-    newObject[key] = newBin;
-    const filePath = "../dbfiles/bintype.json";
-    jsonfile.writeFile(filePath, newObject, function(err) {
-      if (err) {
-        console.log("Error : ", err);
-      } else {
-        console.log("Write sucessfull");
-      }
+  resetInfoAndError(info = "", error = "") {
+    this.setState(prevState => {
+      return {
+        info,
+        error
+      };
     });
+  }
+
+  resetInputFields() {
+    document.getElementsByName("binname").value = "";
+    document.getElementsByName("bincode").value = "";
+    document.getElementsByName("bincap").value = "";
+    document.getElementsByName("binmanufacturer").value = "";
   }
 
   handleClick(e) {
     e.preventDefault();
+    this.resetInfoAndError();
     let newBin = {};
-    newBin["name"] = e.target.elements.binname.value;
-    newBin["code"] = e.target.elements.bincode.value;
-    newBin["capacity"] = e.target.elements.bincap.value;
-    newBin["manufacturer"] = e.target.elements.binmanufacturer.value;
-    console.log(newBin);
-    this.setState(
-      prevState => {
-        return {
-          bintypes: prevState.bintypes.concat([newBin])
-        };
-      },
-      () => {
-        this.writeChangesToFile("bintypes", this.state.bintypes);
-      }
+    console.log(
+      Boolean(e.target.elements.binname.value),
+      Boolean(!e.target.elements.binname.value)
     );
-  }
-
-  deleteBinType(e) {
-    console.log("deleteBinType", e.target.parentNode);
-    let idx = _lodash.findIndex(this.state.bintypes, {
-      code: e.target.parentNode.getAttribute("rel")
-    });
-    console.log(idx);
-    if (idx > -1) {
-      this.setState(prevState => {
-        return {
-          bintypes: prevState.bintypes.splice(idx, 1)
-        };
-      });
+    if (
+      !!e.target.elements.binname.value &&
+      !!e.target.elements.bincode.value &&
+      !!e.target.elements.bincap.value &&
+      !!e.target.elements.binmanufacturer.value
+    ) {
+      newBin["name"] = e.target.elements.binname.value;
+      newBin["code"] = e.target.elements.bincode.value;
+      newBin["capacity"] = e.target.elements.bincap.value;
+      newBin["manufacturer"] = e.target.elements.binmanufacturer.value;
+      console.log(newBin);
+      collBinTypes
+        .push(newBin)
+        .then(() => {
+          this.resetInfoAndError("Data Saved Successfully");
+          this.resetInputFields();
+        })
+        .catch(e => {
+          this.resetInfoAndError("", e);
+        });
+    } else {
+      this.resetInfoAndError("", "Missing One or More Mandatory Fields");
     }
   }
 
@@ -69,6 +73,8 @@ export default class CreateBinType extends React.Component {
             <div className="card">
               <div className="card-content">
                 <span className="card-title">Create Bin</span>
+                {this.state.error && <p>{this.state.error}</p>}
+                {this.state.info && <p>{this.state.info}</p>}
                 <div>
                   <form onSubmit={this.handleClick}>
                     <div className="input-field">
@@ -89,9 +95,9 @@ export default class CreateBinType extends React.Component {
                         id="binmanufacturer"
                         name="binmanufacturer"
                       />
-                      <label htmlFor="binmanufacturer">Bin Capacity</label>
+                      <label htmlFor="binmanufacturer">Bin Manufacturer</label>
                     </div>
-                    <div className="card-action">
+                    <div>
                       <button className="waves-effect waves-light btn deep-orange">
                         Create Bin Type
                       </button>

@@ -1,22 +1,48 @@
 import React from "react";
+import { collBinTypes, collBinInventories } from "../firebase/collections";
 
 export default class CreateInventory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bintypes: [
-        { name: "Temp", code: "T3", capacity: "3", manufacturer: "An" },
-        { name: "Temp 1", code: "T34", capacity: "4", manufacturer: "An" },
-        { name: "Temp 2", code: "T35", capacity: "5", manufacturer: "An" },
-        { name: "Temp 3", code: "T36", capacity: "6", manufacturer: "An" }
-      ]
+      bintypes: [],
+      option: "none"
     };
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.initSelect = this.initSelect.bind(this);
   }
 
   componentDidMount() {
+    this.initSelect();
+    collBinTypes
+      .once("value")
+      .then(snapshot => {
+        console.log("Values : ", snapshot.val());
+        const bintypes = [];
+        snapshot.forEach(childSnapshot => {
+          bintypes.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        this.setState(
+          prevState => {
+            return {
+              bintypes
+            };
+          },
+          () => {
+            this.initSelect();
+          }
+        );
+      })
+      .catch(e => {
+        console.log("Error : ", e);
+      });
+  }
+
+  initSelect() {
     let elems = document.querySelectorAll("select");
-    console.log(elems);
     let instances = M.FormSelect.init(elems);
   }
 
@@ -36,8 +62,9 @@ export default class CreateInventory extends React.Component {
     inventory["lotname"] = e.target.elements.lotname.value;
     inventory["lotquantity"] = e.target.elements.lotquantity.value;
     inventory["lotnumber"] = e.target.elements.lotnumber.value;
-    inventory["bintype"] = this.state.option;
-    this.generateInventoryWithUniqueNumber(inventory);
+    inventory["bintype"] = document.getElementById("binidtype").value;
+    inventory["createdAt"] = new Date().getTime();
+    collBinInventories.push(inventory);
   }
 
   generateInventoryWithUniqueNumber(inventory) {
@@ -73,8 +100,12 @@ export default class CreateInventory extends React.Component {
                       <label htmlFor="lotnumber">Lot Number</label>
                     </div>
                     <div className="input-field col s12">
-                      <select onChange={this.handleOnChange}>
-                        <option value="" disabled>
+                      <select
+                        onChange={this.handleOnChange}
+                        defaultValue={this.state.option}
+                        id="binidtype"
+                      >
+                        <option value="none" disabled>
                           Choose your option
                         </option>
                         {this.state.bintypes.map((bintype, index) => (

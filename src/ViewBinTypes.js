@@ -1,6 +1,7 @@
 import React from "react";
 import _lodash from "lodash";
 import { Link } from "react-router-dom";
+import { collBinTypes, removeFromList } from "../firebase/collections";
 
 export default class ViewBinTypes extends React.Component {
   constructor(props) {
@@ -8,37 +9,46 @@ export default class ViewBinTypes extends React.Component {
     this.state = {
       bintypes: []
     };
-    this.handleClick = this.handleClick.bind(this);
     this.deleteBinType = this.deleteBinType.bind(this);
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    let newBin = {};
-    newBin["name"] = e.target.elements.binname.value;
-    newBin["code"] = e.target.elements.bincode.value;
-    newBin["capacity"] = e.target.elements.bincap.value;
-    newBin["manufacturer"] = e.target.elements.binmanufacturer.value;
-    console.log(newBin);
-    this.setState(prevState => {
-      return {
-        bintypes: prevState.bintypes.concat([newBin])
-      };
-    });
+  componentWillMount() {
+    collBinTypes
+      .once("value")
+      .then(snapshot => {
+        console.log("Values : ", snapshot.val());
+        const bintypes = [];
+        snapshot.forEach(childSnapshot => {
+          bintypes.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        this.setState(prevState => {
+          return {
+            bintypes
+          };
+        });
+      })
+      .catch(e => {
+        console.log("Error : ", e);
+      });
   }
 
   deleteBinType(e) {
-    console.log("deleteBinType", e.target.parentNode);
+    console.log("deleteBinType ", e);
+    let id = e;
     let idx = _lodash.findIndex(this.state.bintypes, {
-      code: e.target.parentNode.getAttribute("rel")
+      id
     });
-    console.log(idx);
     if (idx > -1) {
       this.setState(prevState => {
+        prevState.bintypes.splice(idx, 1);
         return {
-          bintypes: prevState.bintypes.splice(idx, 1)
+          bintypes: prevState.bintypes
         };
       });
+      removeFromList("bintypes/" + id);
     }
   }
 
@@ -60,12 +70,21 @@ export default class ViewBinTypes extends React.Component {
               </thead>
               <tbody>
                 {this.state.bintypes.map((bintype, index) => (
-                  <tr rel={bintype.code} key={bintype.code + index}>
+                  <tr rel={bintype.id} key={bintype.id}>
                     <td>{bintype.name}</td>
                     <td>{bintype.code}</td>
                     <td>{bintype.capacity} Kg.</td>
                     <td>{bintype.manufacturer}</td>
-                    <td onClick={this.deleteBinType}>Delete</td>
+                    <td
+                      onClick={e => {
+                        e.preventDefault;
+                        this.deleteBinType(bintype.id);
+                      }}
+                    >
+                      <a className="btn-floating waves-effect red">
+                        <i className="material-icons">delete_forever</i>
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -1,9 +1,35 @@
 import React from "react";
+import { collCreateBinRequests } from "../firebase/collections";
 
 export default class ViewBinRequest extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      binrequests: []
+    };
+  }
+
+  componentWillMount() {
+    collCreateBinRequests
+      .once("value")
+      .then(snapshot => {
+        console.log("Values : ", snapshot.val());
+        const binrequests = [];
+        snapshot.forEach(childSnapshot => {
+          binrequests.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        this.setState(prevState => {
+          return {
+            binrequests
+          };
+        });
+      })
+      .catch(e => {
+        console.log("Error : ", e);
+      });
   }
 
   // Action is approve and dispatched. Conditional button enbling
@@ -20,7 +46,7 @@ export default class ViewBinRequest extends React.Component {
               <table>
                 <thead>
                   <tr>
-                    <th>Id</th>
+                    <th>Row Number</th>
                     <th>Desc</th>
                     <th>Bin Type</th>
                     <th>Quantity</th>
@@ -28,36 +54,22 @@ export default class ViewBinRequest extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>R101</td>
-                    <td>Need 5 Bin of 5 Kg</td>
-                    <td>TP5</td>
-                    <td>10</td>
-                    <td>
-                      <i className="material-icons">done</i>
-                      <i className="material-icons">arrow_forward</i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>R102</td>
-                    <td>Need 5 Bin of 3 Kg</td>
-                    <td>TP3</td>
-                    <td>10</td>
-                    <td>
-                      <i className="material-icons">done</i>
-                      <i className="material-icons">arrow_forward</i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>R103</td>
-                    <td>Need 5 Bin of 7 Kg</td>
-                    <td>TP7</td>
-                    <td>10</td>
-                    <td>
-                      <i className="material-icons">done</i>
-                      <i className="material-icons">arrow_forward</i>
-                    </td>
-                  </tr>
+                  {this.state.binrequests.map((binrequest, index) => (
+                    <tr key={binrequest.id}>
+                      <td>{index + 1}</td>
+                      <td>{binrequest.reqdesc}</td>
+                      <td>{binrequest.bintype}</td>
+                      <td>{binrequest.reqquantity}</td>
+                      <td>
+                        <a className="btn-floating waves-effect green">
+                          <i className="material-icons">done</i>
+                        </a>
+                        <a className="btn-floating waves-effect blue">
+                          <i className="material-icons">arrow_forward</i>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
