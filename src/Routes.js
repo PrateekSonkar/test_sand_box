@@ -9,6 +9,9 @@ import RequestBins from "./RequestInventory";
 import ViewBinRequest from "./ViewBinRequest";
 import ViewBinTypes from "./ViewBinTypes";
 import Header from "./Header";
+import BinListRedux from "./ViewBinListRedux";
+import CreateBinForm from "./CreateBinForm";
+import CreateInventoryForm from "./CreateInventoryForm";
 
 const Routes = props => {
   return (
@@ -17,13 +20,16 @@ const Routes = props => {
         <div>
           <Header />
           <Switch>
-            <Route path="/" component={SmallCardComponent} exact={true} />
-            <Route path="/createbintype" component={CreateBinType} />
+            <Route path="/" component={CreateBinType} exact={true} />
+            <Route path="/createbintype" component={CreateBinForm} />
             <Route path="/viewbintypes" component={ViewBinTypes} />
-            <Route path="/createbininventory" component={CreateBinInventory} />
+            <Route path="/createbininventory" component={CreateInventoryForm} />
             <Route path="/viewbininventory" component={ViewBinInventory} />
             <Route path="/requestbins" component={RequestBins} />
             <Route path="/viewbinrequest" component={ViewBinRequest} />
+            <Route path="/reduxbinlist" component={BinListRedux} />
+            <Route path="/createbinform" component={CreateBinForm} />
+            <Route path="/createinvform" component={CreateInventoryForm} />
           </Switch>
         </div>
       </BrowserRouter>

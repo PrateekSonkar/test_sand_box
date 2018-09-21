@@ -1,74 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import Routes from "./Routes";
 import firebase from "../firebase/firebase";
-// import SmallCardComponent from "./SmallCardComponent";
-// import CreateInventory from "./CreateInventory";
-// import CreateBinType from "./CreateBinType";
-// import ViewInventory from "./ViewInventory";
-// import RequestInventory from "./RequestInventory";
-// import ViewBinRequest from "./ViewBinRequest";
-
+import configureStore from "./store/configureStore";
+import { addExpense } from "./actions/expenses";
+import { addNewBin } from "../src/actions/binTypesActions";
 import "./styles.css";
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       boxtexts: [
-//         "this is chicken",
-//         "this is vegetable",
-//         "this is fresh fish",
-//         "this is chicken",
-//         "this is vegetable",
-//         "this is fresh fish",
-//         "this is chicken",
-//         "this is vegetable",
-//         "this is fresh fish"
-//       ]
-//     };
-//   }
+const store = configureStore();
 
-//   render() {
-//     return (
-//       <div className="App">
-//         <div>Text goes here</div>
-//         <div className="parentDiv">
-//           {this.state.boxtexts.map((boxtext, index) => (
-//             <SmallCardComponent key={index} boxtext={boxtext} />
-//           ))}
-//         </div>
-//         <div className="container">
-//           <CreateInventory />
-//         </div>
-//         <div className="row">
-//           <b>New Bin 1 </b>
-//           <div className="container">
-//             <CreateBinType />
-//           </div>
-//         </div>
-//         <div className="row">
-//           <ViewInventory />
-//         </div>
-//         <div className="row">
-//           <RequestInventory />
-//         </div>
-//         <div className="row">
-//           <ViewBinRequest />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+store.dispatch(addExpense({ description: "Water bill" }));
+store.dispatch(
+  addNewBin({
+    id: "V-EY4NDrxr",
+    binname: "Dummy Bin",
+    bincode: "1212",
+    bincap: "12",
+    binmanufacturer: "AND"
+  })
+);
+store.dispatch(
+  addNewBin({
+    id: "EEY4NDrxr",
+    binname: "Dummy 2",
+    bincode: "0124",
+    bincap: "20",
+    binmanufacturer: "MKL"
+  })
+);
+store.subscribe(() => {
+  console.log("from Index : ", store.getState());
+});
 
-// function App() {
-//   return (
-//   <div className="App">
-//     <h1>Hello CodeSandbox</h1>
-//     <h2>Start editing to see some magic happen!</h2>
-//   </div>
-// );
-// }
+const jsx = (
+  <Provider store={store}>
+    <Routes />
+  </Provider>
+);
+
+console.log("from Index : ", store.getState());
+const rootElement = document.getElementById("root");
+ReactDOM.render(jsx, rootElement);
 
 // console.log(firebase.name);
 // console.log(firebase.database());
@@ -111,6 +84,3 @@ import "./styles.css";
 // database.ref("expense").on("child_changed", snapshot => {
 //   console.log(snapshot.key, snapshot.val());
 // });
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<Routes />, rootElement);

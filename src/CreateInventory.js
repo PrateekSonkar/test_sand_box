@@ -10,6 +10,7 @@ export default class CreateInventory extends React.Component {
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.initSelect = this.initSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +65,7 @@ export default class CreateInventory extends React.Component {
     inventory["lotnumber"] = e.target.elements.lotnumber.value;
     inventory["bintype"] = document.getElementById("binidtype").value;
     inventory["createdAt"] = new Date().getTime();
+    this.props.onSubmit(inventory);
     collBinInventories.push(inventory);
   }
 

@@ -1,5 +1,7 @@
 import React from "react";
+
 import { collBinTypes } from "../firebase/collections";
+import { addBinType } from "../src/actions/binTypesActions";
 
 export default class CreateBinType extends React.Component {
   constructor(props) {
@@ -10,7 +12,6 @@ export default class CreateBinType extends React.Component {
       error: ""
     };
     this.handleClick = this.handleClick.bind(this);
-    this.deleteBinType = this.deleteBinType.bind(this);
     this.resetInfoAndError = this.resetInfoAndError.bind(this);
     this.resetInputFields = this.resetInputFields.bind(this);
   }
@@ -50,6 +51,7 @@ export default class CreateBinType extends React.Component {
       newBin["capacity"] = e.target.elements.bincap.value;
       newBin["manufacturer"] = e.target.elements.binmanufacturer.value;
       console.log(newBin);
+      this.props.onSubmit(newBin);
       collBinTypes
         .push(newBin)
         .then(() => {
@@ -73,12 +75,21 @@ export default class CreateBinType extends React.Component {
             <div className="card">
               <div className="card-content">
                 <span className="card-title">Create Bin</span>
-                {this.state.error && <p>{this.state.error}</p>}
-                {this.state.info && <p>{this.state.info}</p>}
+                {this.state.error && (
+                  <p className="green-text text-darken-2">{this.state.error}</p>
+                )}
+                {this.state.info && (
+                  <p className="red-text text-darken-2">{this.state.info}</p>
+                )}
                 <div>
                   <form onSubmit={this.handleClick}>
                     <div className="input-field">
-                      <input type="text" id="binname" name="binname" />
+                      <input
+                        type="text"
+                        id="binname"
+                        name="binname"
+                        autoFocus
+                      />
                       <label htmlFor="binname">Bin Name</label>
                     </div>
                     <div className="input-field">

@@ -73,7 +73,7 @@ export default class ViewBinTypes extends React.Component {
                   <tr rel={bintype.id} key={bintype.id}>
                     <td>{bintype.name}</td>
                     <td>{bintype.code}</td>
-                    <td>{bintype.capacity} Kg.</td>
+                    <td>{bintype.capacity}</td>
                     <td>{bintype.manufacturer}</td>
                     <td
                       onClick={e => {
