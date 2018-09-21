@@ -1,36 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
-import ViewBinTypesList from "./ViewBinTypesList";
+import BinListRedux from "./ViewBinListRedux";
 
-const ViewBinTypesRedux = props => (
-  <table>
-    <thead>
-      <tr>
-        <th>Bin Name</th>
-        <th>Bin Code</th>
-        <th>Bin Capacity</th>
-        <th>Bin Manufacturer</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {props.bintypes.map((bintype, index) => {
-        return (
-          <ViewBinTypesList
-            key={bintype.id}
-            bintype={bintype}
-            deleteBinType={props.deleteBinType}
-          />
-        );
-      })}
-    </tbody>
-  </table>
-);
+export default class ViewBinTypesRedux extends React.Component {
+  constructor(props) {
+    super(props);
+    this.testFunc = this.testFunc.bind(this);
+  }
 
-const mapStateToProps = state => {
-  return {
-    bintypes: state.bintypes
-  };
-};
+  testFunc(id) {
+    console.log("test function ", id);
+  }
 
-export default connect(mapStateToProps)(ViewBinTypesList);
+  render() {
+    return (
+      <div>
+        <b> View List </b>
+        <BinListRedux testFunc={this.testFunc} />
+      </div>
+    );
+  }
+}

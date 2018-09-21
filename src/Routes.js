@@ -9,7 +9,8 @@ import RequestBins from "./RequestInventory";
 import ViewBinRequest from "./ViewBinRequest";
 import ViewBinTypes from "./ViewBinTypes";
 import Header from "./Header";
-import BinListRedux from "./ViewBinListRedux";
+//import BinListRedux from "./ViewBinListRedux";
+import BinListRedux from "./ViewBinTypesRedux";
 import CreateBinForm from "./CreateBinForm";
 import CreateInventoryForm from "./CreateInventoryForm";
 
